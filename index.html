@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee Links - Categorias</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Pequeno ajuste apenas para esta página, para compensar a falta do botão de ID */
+        .container ul { margin-top: 15px !important; }
+    </style>
+</head>
+
+<body>
+
+<div id="overlay-tiktok" onclick="fecharSeFora(event)">
+    <div class="box">
+        <span class="fechar-x" onclick="continuarOverlay()">&times;</span>
+        <div class="emoji-alerta">🚨</div>
+        <h2>Experiência Melhor</h2>
+        <p>Para copiar os IDs e garantir seus descontos, saia do navegador do TikTok:</p>
+
+        <div class="tutorial-ios">
+            <div class="passo">
+                <span>1. Clique nos <b>(...)</b> ou <b>(⋮)</b> no topo</span>
+            </div>
+            <div class="passo">
+                <span>2. Selecione <b>"Abrir no Navegador"</b></span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-principal" onclick="abrirFora()">Abrir Navegador Externo</button>
+            <button class="btn-link" onclick="continuarOverlay()">Continuar aqui mesmo</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<header>
+    <div id="cronometro">
+        <span class="titulo">OFERTA LIMITADA</span>
+        <span id="tempo">10:00:00</span>
+    </div>
+
+    <img src="Images/iconeshopee.png.png" alt="Shopee">
+</header>
+
+<ul>
+    <li>
+        <a href="casa.html" class="produto">
+            <img src="Images/casa.png.png" alt="Seleção 2026">
+            <span>Casa & Utilidades</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="beleza.html" class="produto">
+            <img src="Images/beleza.png.png" alt="Linha Retrô">
+            <span>Beleza</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="moda.html" class="produto">
+            <img src="Images/moda.png.png" alt="Feminino">
+            <span>Moda</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="eletronicos.html" class="produto">
+            <img src="Images/eletronicos (1).png" alt="Feminino">
+            <span>Eletrônicos</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="auto.html" class="produto">
+            <img src="Images/ferramentas.png.png" alt="Feminino">
+            <span>Ferramentas</span>
+        </a>
+    </li>
+ 
+
+</ul>
+
+<footer>ShopeeLinks©</footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

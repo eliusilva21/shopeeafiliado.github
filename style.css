@@ -1,0 +1,359 @@
+/* ================= RESET GLOBAL ================= */
+* {
+    margin: 0 ;
+    padding: 7px;
+    box-sizing: border-box;
+}
+
+/* ================= BODY ================= */
+body {
+    background-color: black;
+    font-family: sans-serif;
+    color: white;
+}
+
+/* ================= CORREÇÃO AGRESSIVA E AUMENTO DO LOGO ================= */
+/* 1. Garante que o container do header ocupe a largura total da tela */
+header {
+    width: 100%;
+    margin: 0;
+    padding: 0; /* Remove paddings que possam limitar o tamanho */
+    text-align: center; /* Ajuda a centralizar elementos internos */
+}
+
+/* 2. O Logo propriamente dito */
+header img {
+    /* AUMENTO AGRESSIVO E RESPONSIVO */
+    /* Agora o logo ocupa 90% da largura TOTAL da tela (viewport) */
+    width: 95%; 
+    max-width: 500px; /* Limite agressivo de 400px para telas maiores (como tablets) */
+    
+    height: auto;     /* Mantém a proporção sem achatar ou distorcer (evita parecer torto) */
+    border-radius: 20px; /* Mantém o arredondamento que você gosta */
+    
+    /* CENTRALIZAÇÃO PERFEITA */
+    display: block;   
+    margin: 0 -6px; /* Mais espaço em cima/baixo (40px) e centralizado horizontalmente (auto) */
+    
+    /* Garantia anti-distorção extra */
+    object-fit: contain;
+}
+
+/* CONTAINER PRINCIPAL (FUNDO) */
+#overlay-tiktok {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+}
+
+#overlay-tiktok.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* A CAIXINHA (MODAL) */
+#overlay-tiktok .box {
+    position: relative; 
+    background: #1a1a1a;
+    padding: 40px 25px;
+    border-radius: 24px;
+    width: 85%;
+    max-width: 340px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#overlay-tiktok.active .box {
+    transform: scale(1);
+}
+
+/* TEXTOS */
+#overlay-tiktok h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+#overlay-tiktok p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+/* BOTÕES DO OVERLAY */
+#overlay-tiktok .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#overlay-tiktok .buttons button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+#overlay-tiktok .buttons button:first-child {
+    background: #0088ff;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 136, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal; 
+    line-height: 1.2;
+}
+
+#overlay-tiktok .buttons button:first-child:active {
+    transform: scale(0.96);
+    background: #0077ee;
+}
+
+#overlay-tiktok .buttons button:last-child {
+    background: transparent;
+    color: #777;
+    font-size: 0.85rem;
+    text-decoration: underline;
+}
+
+/* Posicionamento do X */
+.fechar-x {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s;
+    font-family: Arial, sans-serif;
+}
+
+.fechar-x:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+/* ELEMENTOS DE ALERTA */
+.emoji-alerta {
+    font-size: 40px;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: pulsarSirene 1.2s infinite ease-in-out;
+}
+
+@keyframes pulsarSirene {
+    0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255, 0, 0, 0)); }
+    50% { transform: scale(1.15) rotate(10deg); filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6)); }
+    100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0px rgba(255, 0, 0, 0)); }
+}
+
+/* TUTORIAL PONTILHADO */
+.tutorial-ios {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed #555;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0 25px 0;
+    text-align: left;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.passo {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #eee;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.passo::before {
+    content: "✓";
+    color: #0088ff;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.passo b { color: #0088ff; }
+
+/* CRONÔMETRO */
+#cronometro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #bb0b0b;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px black;
+    font-family: 'Gill Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    font-size: 20px;
+    line-height: 3px;
+}
+
+#cronometro .titulo {
+    font-size: 18px;
+    color: yellow;
+    font-family: 'Arial Narrow';
+}
+
+@keyframes piscar {
+    0%, 50%, 100% { color: yellow; }
+    25%, 75% { color: white; }
+}
+
+.piscar {
+    animation: piscar 0.8s infinite;
+}
+
+/* HEADER E LISTA */
+header img {
+    border-radius: 20px;
+    width: 310px;
+    height: 250px;
+}
+
+.container {
+    width: 100%;       /* Ocupa a largura total disponível */
+    max-width: 320px;  /* Mas não passa de 320px (tamanho ideal pro celular) */
+    margin: 0 auto;    /* Centraliza na tela */
+    text-align: center;
+    padding: 0 10px;   /* Adiciona uma pequena margem interna nas laterais */
+}
+
+ul { margin-top: -32px; list-style: none; }
+
+/* ================= BOTÕES DE CATEGORIAS COM NEON FIXO ================= */
+ul a {
+    background-color: #EE4D2D;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 22px; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border-radius: 12px;
+    min-height: 80px; 
+    margin-bottom: 15px; /* Aumentei um pouco o espaço para o brilho não encostar no de baixo */
+    position: relative; 
+    padding-left: 65px;
+    transition: all 0.3s ease;
+
+    /* BORDA NEON FIXA (AZUL DO OVERLAY) */
+    border: 2px solid #e6f7ff; 
+    box-shadow: 0 0 15px rgba(238, 77, 45), inset 0 0 5px rgba(238, 77, 45);
+}
+
+/* Efeito ao clicar (opcional: ele brilha mais forte quando encosta) */
+ul a:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 25px rgba(238, 77, 45);
+}
+
+/* Imagem da bandeira fixa na esquerda */
+ul a img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    position: absolute;
+    left: 15px; 
+}
+
+ul a:hover {
+    transform: scale(1.1);
+}
+
+/* ANIMAÇÃO SHAKE */
+.shake-effect {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(4px); }
+    50% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* GARANTIA DOS BOTÕES ORIGINAIS DO SITE */
+button {
+    padding: 4px 10px;
+    font-size: 0.8em;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: #fff;
+    margin-left: 8px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(1); }
+}
+
+/* ========================================= 
+   AJUSTES PARA CATEGORIAS E REMOÇÃO SHEIN 
+   ========================================= */
+
+/* Ajuste para quando a lista for de Categorias (index.html) */
+/* No index.html, adicione id="lista-categorias" na sua <ul> */
+#lista-categorias {
+    margin-top: 20px !important;
+}
+
+
+/* Estilo para o link de "Voltar" nas páginas de produto */
+.btn-voltar {
+    display: inline-block;
+    color: #777;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.btn-voltar:hover {
+    color: white;
+}
+
+footer {
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

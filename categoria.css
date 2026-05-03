@@ -1,0 +1,219 @@
+/* ================= RESET GLOBAL ================= */
+* {
+    margin: 0;
+    padding: 7px;
+    box-sizing: border-box;
+}
+
+/* ================= BODY ================= */
+body {
+    background-color: black;
+    font-family: sans-serif;
+    color: white;
+}
+
+header {
+    width: 100%;
+    margin: 0;
+    padding: 0; /* Remove paddings que possam limitar o tamanho */
+    text-align: center; /* Ajuda a centralizar elementos internos */
+}
+
+/* 2. O Logo propriamente dito */
+header img {
+    /* AUMENTO AGRESSIVO E RESPONSIVO */
+    /* Agora o logo ocupa 90% da largura TOTAL da tela (viewport) */
+    width: 95%; 
+    max-width: 500px; /* Limite agressivo de 400px para telas maiores (como tablets) */
+    
+    height: auto;     /* Mantém a proporção sem achatar ou distorcer (evita parecer torto) */
+    border-radius: 20px; /* Mantém o arredondamento que você gosta */
+    
+    /* CENTRALIZAÇÃO PERFEITA */
+    display: block;   
+    margin: 0 -4px; /* Mais espaço em cima/baixo (40px) e centralizado horizontalmente (auto) */
+    
+    /* Garantia anti-distorção extra */
+    object-fit: contain;
+}
+
+
+/* CRONÔMETRO */
+#cronometro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #bb0b0b;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px black;
+    font-family: 'Gill Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    font-size: 20px;
+    line-height: 3px;
+}
+
+#cronometro .titulo {
+    font-size: 18px;
+    color: yellow;
+    font-family: 'Arial Narrow';
+}
+
+@keyframes piscar {
+    0%, 50%, 100% { color: yellow; }
+    25%, 75% { color: white; }
+}
+
+.piscar {
+    animation: piscar 0.8s infinite;
+}
+
+/* HEADER E LISTA */
+header img {
+    border-radius: 20px;
+    width: 310px;
+    height: 250px;
+}
+
+.container {
+    text-align: center;
+    width: 320px;
+    margin: 0 auto;
+}
+
+ul { margin-top: -32px; list-style: none; }
+
+ul a {
+    background-color: #EE4D2D;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 18px; /* Ajustei levemente para caber melhor */
+    display: flex;    /* Mudado para flex para alinhar foto e texto lado a lado */
+    align-items: center;
+    gap: 15px;
+    border-radius: 12px;
+    border: 1px solid white;
+    min-height: 80px; /* Em vez de max-height, usamos min-height para garantir que apareça */
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+
+      /* BORDA NEON FIXA (AZUL DO OVERLAY) */
+    border: 2px solid #e6f7ff; 
+    box-shadow: 0 0 15px rgba(238, 77, 45), inset 0 0 5px rgba(238, 77, 45);
+}
+
+/* Garante que a imagem dentro do link não fique gigante */
+ul a img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+ul a:hover {
+    transform: scale(1.1);
+}
+
+/* ================= BOTÃO SHEIN ================= */
+.btn-shein {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    border-radius: 50px;
+
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+
+
+
+    /* Animação */
+    animation: pulse 1.5s infinite;
+}
+
+/* Imagem dentro do botão */
+.btn-shein img {
+    width: 38px;
+    height: 38px;
+    border-radius: 16px;
+
+
+    display: block;
+    margin-right: -10px;
+}
+
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(1); }
+}
+
+/* ANIMAÇÃO SHAKE */
+.shake-effect {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(4px); }
+    50% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* GARANTIA DOS BOTÕES ORIGINAIS DO SITE */
+button {
+    padding: 4px 10px;
+    font-size: 0.8em;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: #fff;
+    margin-left: 8px;
+}
+
+
+.btn-voltar-container {
+    padding: 0 10px;
+    margin-top: 0px;    /* Distância do cronômetro (ajuste se precisar subir mais) */
+    margin-bottom: 55px; /* ISSO cria o espaço entre o botão e o primeiro ID */
+    text-align: left;
+    display: block;
+}
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    background-color: #1a1a1a; /* Fundo escuro para contrastar com o fundo preto */
+    color: #0088ff; /* Azul do seu overlay */
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+
+.btn-voltar:active {
+    transform: scale(0.95);
+    background-color: #333;
+}
+
+/* Ícone de seta */
+.btn-voltar::before {
+    content: "❮"; 
+    margin-right: 8px;
+    font-size: 12px;
+}
