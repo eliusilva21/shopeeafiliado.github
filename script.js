@@ -1,13 +1,21 @@
 // ================= CRONÔMETRO PERSISTENTE (7 MINUTOS) =================
-const DURACAO_TOTAL = 10 * 60 * 1000; // Alterado para 7 minutos
+// Corrigido para 7 minutos de duração (7 * 60 * 1000)
+const DURACAO_TOTAL = 7 * 60 * 1000; 
+// 24 horas em milissegundos
+const TEMPO_DE_RESET = 24 * 60 * 60 * 1000; 
 
 function obterDataFinal() {
     let final = localStorage.getItem('oferta_final');
+    let inicio = localStorage.getItem('oferta_inicio');
+    const agora = Date.now();
     
-    // Se não houver data OU se você quiser "forçar" os 7 minutos agora:
-    if (!final) {
-        final = Date.now() + DURACAO_TOTAL;
+    // Se não houver registro (primeira visita) OU se já passaram 24 horas desde o início
+    if (!final || !inicio || agora >= parseInt(inicio) + TEMPO_DE_RESET) {
+        final = agora + DURACAO_TOTAL;
+        
+        // Atualiza o localStorage com o novo tempo final e o início do novo ciclo de 24h
         localStorage.setItem('oferta_final', final);
+        localStorage.setItem('oferta_inicio', agora); 
     }
     
     return parseInt(final);
@@ -24,24 +32,29 @@ const timer = setInterval(() => {
     let tempoRestante = dataFinal - Date.now();
 
     if (tempoRestante <= 0) {
-        // ... (mantenha o restante do seu código de finalização aqui)
         clearInterval(timer);
+        
         const titulo = document.querySelector("#cronometro .titulo");
         if (titulo) titulo.remove();
+        
         tempoEl.textContent = "OFERTA QUASE ESGOTADA!";
         tempoEl.classList.add("piscar");
         return;
     }
 
+    // Cálculos de minutos e segundos
     let minutos = Math.floor(tempoRestante / 60000);
     let segundos = Math.floor((tempoRestante % 60000) / 1000);
     
+    // Formatação com zero à esquerda
     minutos = minutos < 10 ? '0' + minutos : minutos;
     segundos = segundos < 10 ? '0' + segundos : segundos;
     
+    // Milissegundos visuais (efeito estético)
     msVisual = (msVisual + 1) % 31;
     let msText = msVisual < 10 ? '0' + msVisual : msVisual;
 
+    // Atualiza a tela
     tempoEl.textContent = `${minutos}:${segundos}:${msText}`;
 }, 33);
 
