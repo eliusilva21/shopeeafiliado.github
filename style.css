@@ -373,7 +373,7 @@ padding: 80px 0 5px 0;
 
 .versao {
   position: absolute;
-  right: 16px;
+  right: -40px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 13px;
