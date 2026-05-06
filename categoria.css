@@ -125,52 +125,6 @@ ul a:hover {
     transform: scale(1.1);
 }
 
-/* ================= BOTÃO SHOPEE ================= */
-.btn-shein {
-    display: inline-flex;
-    align-items: center;
-    gap: 0;
-    border-radius: 50px;
-
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-
-
-
-    /* Animação */
-    animation: pulse 1.5s infinite;
-}
-
-/* Imagem dentro do botão */
-.btn-shein img {
-    width: 62px;
-    height: 46px;
-    border-radius: 16px;
-
-
-    display: block;
-    margin-right: -10px;
-}
-
-
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
-    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-    100% { transform: scale(1); }
-}
-
-/* ANIMAÇÃO SHAKE */
-.shake-effect {
-    animation: shake 0.4s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(4px); }
-    50% { transform: translateX(-4px); }
-    75% { transform: translateX(4px); }
-}
 
 /* GARANTIA DOS BOTÕES ORIGINAIS DO SITE */
 button {
@@ -218,3 +172,4 @@ button {
     margin-right: 8px;
     font-size: 12px;
 }
+

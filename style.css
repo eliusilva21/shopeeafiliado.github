@@ -358,3 +358,25 @@ footer {
 font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 padding: 80px 0 5px 0;
 }
+
+.rodape {
+  position: relative;
+  background: black;
+  color: #fff;
+  padding: 80px 0 0 0;
+  text-align: center;
+}
+
+.copyright {
+  display: block;
+}
+
+.versao {
+  position: absolute;
+  right: -48px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  opacity: 0.7;
+  padding: 80px 0 0 0;
+}
