@@ -10,6 +10,7 @@ body {
     background-color: black;
     font-family: sans-serif;
     color: white;
+    overflow-x: hidden; /* Evita barra de rolagem horizontal durante o efeito */
 }
 
 header {
@@ -172,4 +173,23 @@ button {
     margin-right: 8px;
     font-size: 12px;
 }
+
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000; /* Tem que ser maior que o cronômetro (9999) */
+    background-color: black; /* Mantém o padrão escuro do seu site */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow-y: auto;
+}
+
+/* Posições de início do arraste */
+.slide-from-right { transform: translateX(100%); }
+.slide-from-left { transform: translateX(-100%); }
+
+/* Posição final (quando a página cobre a tela) */
+.slide-active { transform: translateX(0); }
 

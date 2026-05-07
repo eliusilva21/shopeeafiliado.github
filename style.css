@@ -10,6 +10,7 @@ body {
     background-color: black;
     font-family: sans-serif;
     color: white;
+    overflow-x: hidden; /* Evita barra de rolagem horizontal durante o efeito */
 }
 
 /* ================= CORREÇÃO AGRESSIVA E AUMENTO DO LOGO ================= */
@@ -48,16 +49,17 @@ header img {
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
-    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999999;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s ease-in-out;
+    display: none !important; /* Força ele a ficar escondido ao carregar */
 }
 
 #overlay-tiktok.active {
+    display: flex !important; /* Só mostra quando o JS ativar */
     opacity: 1;
     visibility: visible;
 }
@@ -252,6 +254,7 @@ header img {
     margin: 0 auto;    /* Centraliza na tela */
     text-align: center;
     padding: 0 10px;   /* Adiciona uma pequena margem interna nas laterais */
+    
 }
 
 ul { margin-top: -32px; list-style: none; }
@@ -380,3 +383,23 @@ padding: 80px 0 5px 0;
   opacity: 0.7;
   padding: 80px 0 0 0;
 }
+
+/* A camada que vai deslizar por cima de tudo */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000; /* Tem que ser maior que o cronômetro (9999) */
+    background-color: black; /* Mantém o padrão escuro do seu site */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow-y: auto;
+}
+
+/* Posições de início do arraste */
+.slide-from-right { transform: translateX(100%); }
+.slide-from-left { transform: translateX(-100%); }
+
+/* Posição final (quando a página cobre a tela) */
+.slide-active { transform: translateX(0); }

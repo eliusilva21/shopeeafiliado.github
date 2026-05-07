@@ -135,3 +135,36 @@ function fecharOverlay() {
 function continuarOverlay() {
     fecharOverlay();
 }
+
+// ================= TRANSIÇÃO SUAVE (VERSÃO ANTI-BUG) =================
+document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+
+    if (link && link.href.includes(window.location.origin) && !link.target) {
+        e.preventDefault();
+        const url = link.href;
+
+        const container = document.querySelector(".container");
+        if (!container) {
+            window.location.href = url;
+            return;
+        }
+
+        const isVoltar = link.classList.contains("btn-voltar") || url.includes("index.html");
+
+        // Em vez de injetar HTML, vamos apenas animar a SAÍDA da página atual
+        container.style.transition = "transform 0.4s ease, opacity 0.3s ease";
+        container.style.opacity = "0";
+        
+        if (isVoltar) {
+            container.style.transform = "translateX(100%)"; // Desliza para a direita ao voltar
+        } else {
+            container.style.transform = "translateX(-100%)"; // Desliza para a esquerda ao entrar
+        }
+
+        // Aguarda a animação e muda de página de verdade
+        setTimeout(() => {
+            window.location.href = url;
+        }, 400);
+    }
+});
