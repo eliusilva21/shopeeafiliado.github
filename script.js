@@ -168,3 +168,19 @@ document.addEventListener("click", (e) => {
         }, 400);
     }
 });
+
+async function encurtarLinkPeloSite(urlLonga) {
+    const resposta = await fetch("http://127.0.0.1:8000/encurtar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            url: urlLonga
+        })
+    });
+
+    const dados = await resposta.json();
+    console.log("Link curto criado:", dados.short_url);
+    return dados.short_url;
+}
