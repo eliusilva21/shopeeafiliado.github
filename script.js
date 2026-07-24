@@ -169,18 +169,60 @@ document.addEventListener("click", (e) => {
     }
 });
 
-async function encurtarLinkPeloSite(urlLonga) {
-    const resposta = await fetch("http://127.0.0.1:8000/encurtar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            url: urlLonga
-        })
-    });
+// ================= INTEGRAÇÃO DOS PRODUTOS COM O ENCURTADOR PYTHON =================
 
-    const dados = await resposta.json();
-    console.log("Link curto criado:", dados.short_url);
-    return dados.short_url;
+// 1. Função que se comunica com a API FastAPI
+async function encurtarLinkPeloSite(urlLonga) {
+    try {
+        const resposta = await fetch("http://127.0.0.1:8000/encurtar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: urlLonga
+            })
+        });
+
+        if (!resposta.ok) throw new Error("Erro na API");
+
+        const dados = await resposta.json();
+        console.log("Link curto gerado pelo backend:", dados.short_url);
+        return dados.short_url;
+    } catch (erro) {
+        console.error("Servidor Python off-line ou erro na API:", erro);
+        return null; // Retorna nulo se der erro
+    }
 }
+
+// 2. Interceptador de cliques nos produtos da Shopee
+document.addEventListener("DOMContentLoaded", () => {
+    // Seleciona todos os links de produtos
+    const produtosShopee = document.querySelectorAll("ul li a.produto");
+
+    produtosShopee.forEach(link => {
+        link.addEventListener("click", async (event) => {
+            // Pega a URL original da Shopee contida no href do HTML
+            const urlShopeeOriginal = link.getAttribute("href");
+
+            // Se for um link de produto da Shopee (começa com http/https)
+            if (urlShopeeOriginal && urlShopeeOriginal.startsWith("http")) {
+                // Impede a navegação instantânea para dar tempo do Python encurtar
+                event.preventDefault();
+
+                console.log("Enviando link para o encurtador:", urlShopeeOriginal);
+
+                // Envia para o servidor Python
+                const linkEncurtado = await encurtarLinkPeloSite(urlShopeeOriginal);
+
+                if (linkEncurtado) {
+                    // Abre o link curto em uma nova aba (ou na mesma)
+                    window.open(linkEncurtado, "_blank");
+                } else {
+                    // Fallback: se o Python estiver desligado, abre o link original da Shopee diretamente
+                    window.open(urlShopeeOriginal, "_blank");
+                }
+            }
+        });
+    });
+});
