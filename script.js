@@ -226,3 +226,54 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Exemplo de como o seu JS deve enviar os dados para o /encurtar:
+fetch('http://127.0.0.1:8000/encurtar', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        url: inputUrl.value,          // A URL do produto
+        categoria: selectCategoria.value  // ⚠️ Se faltar esse campo, vai tudo para 'geral' (ID 1)
+    })
+})
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        // 1. Pede todas as categorias e links cadastrados no MySQL via FastAPI
+        const response = await fetch('http://127.0.0.1:8000/categorias/todas');
+        const dadosCategorias = await response.json();
+
+        // 2. Filtra a categoria correspondente a esta página (ex: "casa utilidades")
+        const categoriaAtual = dadosCategorias.find(cat => 
+            cat.categoria_nome.toLowerCase().includes("casa")
+        );
+
+        if (!categoriaAtual) {
+            console.log("Nenhuma categoria correspondente encontrada no banco.");
+            return;
+        }
+
+        // 3. Seleciona todos os produtos da página HTML
+        const produtosNaTela = document.querySelectorAll('.produto');
+
+        produtosNaTela.forEach(elementoA => {
+            const urlOriginalDoHtml = elementoA.getAttribute('href');
+
+            // 4. Procura no banco de dados se esse link já foi encurtado
+            const linkNoBanco = categoriaAtual.links.find(l => l.original_url === urlOriginalDoHtml);
+
+            if (linkNoBanco) {
+                // 5. Substitui o link direto da Shopee pelo link encurtado da API!
+                // Agora, ao clicar, o clique será contabilizado no MySQL.
+                elementoA.href = linkNoBanco.short_url;
+            }
+        });
+
+        console.log("Links sincronizados com o MySQL com sucesso!");
+
+    } catch (erro) {
+        console.error("Erro ao conectar com a API do FastAPI:", erro);
+    }
+});
