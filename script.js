@@ -1,50 +1,74 @@
 // ================= CRONÔMETRO PERSISTENTE (7 MINUTOS) =================
-const DURACAO_TOTAL = 7 * 60 * 1000; 
-const TEMPO_DE_RESET = 24 * 60 * 60 * 1000; 
-
-function obterDataFinal() {
-    let final = localStorage.getItem('oferta_final');
-    let inicio = localStorage.getItem('oferta_inicio');
-    const agora = Date.now();
-    
-    if (!final || !inicio || agora >= parseInt(inicio) + TEMPO_DE_RESET) {
-        final = agora + DURACAO_TOTAL;
-        localStorage.setItem('oferta_final', final);
-        localStorage.setItem('oferta_inicio', agora); 
-    }
-    
-    return parseInt(final);
-}
-
-let dataFinal = obterDataFinal();
-let msVisual = 0;
-
-const timer = setInterval(() => {
+document.addEventListener("DOMContentLoaded", () => {
     const tempoEl = document.getElementById('tempo');
-    if (!tempoEl) return;
+    const cronometroDiv = document.getElementById('cronometro');
+    
+    if (!tempoEl || !cronometroDiv) return;
 
-    let tempoRestante = dataFinal - Date.now();
+    // 1. Pega o link exato que está aberto no navegador
+    const urlAtual = window.location.href.toLowerCase();
+    
+    // 2. Verifica se o usuário está dentro de uma das páginas de categoria
+    const ehPaginaInterna = urlAtual.includes('casa') || 
+                            urlAtual.includes('beleza') || 
+                            urlAtual.includes('setup') || 
+                            urlAtual.includes('eletronicos') || 
+                            urlAtual.includes('ferramentas');
 
-    if (tempoRestante <= 0) {
-        clearInterval(timer);
-        const titulo = document.querySelector("#cronometro .titulo");
-        if (titulo) titulo.remove();
-        tempoEl.textContent = "OFERTA QUASE ESGOTADA!";
-        tempoEl.classList.add("piscar");
-        return;
+    // 3. O REVERSO: Se NÃO for uma página interna, esconde!
+    // Ou seja, na sua tela inicial, o cronômetro some. Nas categorias, ele roda.
+    if (!ehPaginaInterna) {
+        cronometroDiv.style.display = 'none';
+        return; 
     }
 
-    let minutos = Math.floor(tempoRestante / 60000);
-    let segundos = Math.floor((tempoRestante % 60000) / 1000);
-    
-    minutos = minutos < 10 ? '0' + minutos : minutos;
-    segundos = segundos < 10 ? '0' + segundos : segundos;
-    
-    msVisual = (msVisual + 1) % 31;
-    let msText = msVisual < 10 ? '0' + msVisual : msVisual;
+    // 4. Lógica do cronômetro (só roda nas páginas das categorias)
+    const DURACAO_TOTAL = 7 * 60 * 1000; 
+    const TEMPO_DE_RESET = 24 * 60 * 60 * 1000; 
 
-    tempoEl.textContent = `${minutos}:${segundos}:${msText}`;
-}, 33);
+    function obterDataFinal() {
+        // Mudei para v3 para o navegador esquecer o tempo esgotado e zerar o relógio!
+        let final = localStorage.getItem('oferta_final_v3');
+        let inicio = localStorage.getItem('oferta_inicio_v3');
+        const agora = Date.now();
+        
+        if (!final || !inicio || agora >= parseInt(inicio) + TEMPO_DE_RESET) {
+            final = agora + DURACAO_TOTAL;
+            localStorage.setItem('oferta_final_v3', final);
+            localStorage.setItem('oferta_inicio_v3', agora); 
+        }
+        
+        return parseInt(final);
+    }
+
+    let dataFinal = obterDataFinal();
+    let msVisual = 0;
+
+    const timer = setInterval(() => {
+        let tempoRestante = dataFinal - Date.now();
+
+        if (tempoRestante <= 0) {
+            clearInterval(timer);
+            const titulo = cronometroDiv.querySelector(".titulo");
+            if (titulo) titulo.remove();
+            tempoEl.textContent = "OFERTA QUASE ESGOTADA!";
+            tempoEl.classList.add("piscar");
+            return;
+        }
+
+        let minutos = Math.floor(tempoRestante / 60000);
+        let segundos = Math.floor((tempoRestante % 60000) / 1000);
+        
+        minutos = minutos < 10 ? '0' + minutos : minutos;
+        segundos = segundos < 10 ? '0' + segundos : segundos;
+        
+        msVisual = (msVisual + 1) % 31;
+        let msText = msVisual < 10 ? '0' + msVisual : msVisual;
+
+        tempoEl.textContent = `${minutos}:${segundos}:${msText}`;
+    }, 33);
+});
+// ================= FIM DO CRONÔMETRO =================
 
 // ================= COPIAR ID =================
 function copiarID(codigo, botao) {
